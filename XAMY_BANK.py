@@ -1,87 +1,143 @@
-# get username and password:
+max_attempts  = 5
+attempts  = 0
+username =  'python'
+password  = 1234
+amount  = 0
+balance  = 5000
+transaction_pin  = 4040
 
-u_name = "python"
-u_password = "1234"
 
 
-# Handle error inputs:
-try:
-    User_name = input("Enter your username: ").lower()
-    Password = input("Enter your password: ")
-  
-    if User_name == u_name and Password == u_password:
-      print("Login successful________")
-      print("Please wait.........") 
-      pass
+ 
           
-    else:        
-      print("Wrong password")
-      print("Please  enter a valid username and password!!")
-      
-except ValueError:
-        print("ERROR INPUT!!")         
-    
-def main():
-    balance = 1000
-    Running = True
-    amount = 0
-    
-    
-    while True:
-        print("*********************")
-        print(f"WELCOME TO XAMY BANK {User_name}!!")
-        print("**********************")
-        
-        print("Please choose an option:")
-        print("1. check balance")
-        print("2. Deposit fund")
-        print("3. withdraw")
-        print("4. Exit")
-        
-        option = input("Enter your prefarred option(1, 2, 3, 4): ")
-        
-        
-        if option == "1":
-         show_balance(balance - amount)
-        elif option =="2":
-          balance = balance + deposit()
-        elif option == "3":
-          balance = balance - withdrawal(balance)
-        elif option == "4":
-          print("Thank you for banking with us!!")
-          Running == False
-          break
-      
-        else:
-          print("Invalid option. please enter a valid option!!") 
-    
-  # create a balance check function: 
-def show_balance(balance):
+
+def check_balance(balance):
     print(f"Current balance is: {balance:.2f}$")
     return balance 
 
-   # create a deposit function:
+
+
 def deposit():
-    amount = float(input("Enter deposit amount: "))
-    
-    if amount < 1:
-        print("Insufficient fund to deposit")
+    amount  = float(input("Enter deposit amount:"))
+    if amount > 1:
+        print(f"The sum of: {amount:.2f}$ has been deposited to your account")
         return amount
+    
     else:
-        print(f"You just deposited: {amount:.2f}$ to your account!")
+        print("Amount can't be deposited!!")
         return amount
+        
+       
     
-    #create a withdrawal function:
-def withdrawal(balance): 
-    amount = float(input("Enter withdraw amount: "))
+    
+def withdraw(amount):
+    amount  = float(input("Enter the amount you want to withdraw: "))
     
     if amount > balance:
-        print("Insufficient fund")
+        print("Insufficient fund to withdraw!!")
         return 0
+
+    elif amount <= balance:
+        print(f"You just withdrew the sum of: {amount:.2f}$ from your account!")
+        return amount
+        
     else:
-        print(f"Them sum of: {amount}$ has just been withdrawned from your account now!")
-        return amount                               
-if __name__ =="__main__":
-    main()   
+        print("Please enter a valid amount!")
         
+       
         
+            
+def transfer(balance):
+    bank_name  = input("Enter preferred bank name: ")
+    account_number = int(input("Enter the (10)digits recipient account number: "))
+    recipient_name = input("Enter recipient's name: ")
+    amount  = float(input("Enter the amount you want to transfer: "))
+    user_transaction_pin  = int(input("Enter your transfer pin: "))
+    
+    
+            
+    if amount <= balance and user_transaction_pin == transaction_pin:
+         print("Transfer successful")
+         print(f"TRANSFER RECEIPT\nThe  sum of: {amount:.2f}$ has been transferred!!\nRecipient's name: {recipient_name}\nBank name: {bank_name}\nAccount number: ({account_number}).")
+         return amount
+        
+             
+         
+    else:
+        print("Insufficient amount to  transfer\nOr Incorrect transfer pin!!")
+        
+        return amount         
+
+
+
+
+
+while attempts < max_attempts:
+    try:
+        user_name = input("Enter your username: ")   
+        user_password = int(input("Enter your password: "))
+        if user_name == username and user_password == password:
+           print("Login successful...........")
+           print("PLease wait__________")
+           print("Dashboard is loading>>>>>>>>>>")
+           pass
+           
+           
+           
+           print("************************")
+           print(f"WELCOME TO XAMY9 BANK ")
+           print("************************")
+           print(f"Hello,{user_name}!!")
+        
+           print("Please choose an option:")
+           print("1. check balance")
+           print("2. Deposit fund")
+           print("3. withdraw")
+           print("4. Transfer fund")
+           print("5. Exit")
+    
+  
+  
+           option  = input("Choose from the options above(1, 2, 3, 4, 5):")
+      
+           if option == "1":
+              check_balance(balance)  
+                
+   
+           elif option =="2":
+              balance+= deposit()
+       
+           elif option == "3":
+              balance -= withdraw(balance)
+       
+           elif option =="4":
+              balance -= transfer(balance)
+       
+           elif option == "5":
+             print("Thank you for banking with us!\nBye!!")
+             break
+       
+           
+              
+    
+        else:
+           attempts = attempts + 1
+           remaining = max_attempts - attempts
+           print(f"Wrong password or username. You have {remaining} attempts left.") 
+           
+    except ValueError:
+      print("Invalid input, Please enter your correct username amd password")
+          
+if attempts == max_attempts:
+           print("Account locked, Maximum attempts exceeded")  
+          
+
+
+
+         
+    
+       
+       
+       
+   
+                                
